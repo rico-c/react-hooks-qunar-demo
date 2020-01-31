@@ -1,10 +1,14 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 
 import { h0 } from '../../common/fp';
 import { ORDER_DEPART } from '../constant';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
 export default createStore(
     combineReducers(reducers),
@@ -31,5 +35,5 @@ export default createStore(
         isFiltersVisible: false,
         searchParsed: false,
     },
-    applyMiddleware(thunk)
+    composeEnhancers(applyMiddleware(thunk))
 );
